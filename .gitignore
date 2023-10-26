@@ -1,0 +1,3 @@
+node_modules/
+client/src/assets/video.mp4
+server/.env
