@@ -2,7 +2,7 @@
 
 A full-stack web application that mimics the user interface and features of Netflix, built with React, Redux Toolkit, Node.js, Express, and MongoDB.
 
-![Netflix Clone Screenshot](client\src\assets\screenshot.png)
+![Netflix Clone Screenshot](screenshot.png)
 
 ## Installation
 
