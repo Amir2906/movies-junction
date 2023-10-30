@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Card from './Card'
 
 export default React.memo(function CardSlider({ data, title }) {
@@ -28,7 +29,7 @@ export default React.memo(function CardSlider({ data, title }) {
             <h1>{title}</h1>
             <div className="wrapper">
                 <div className={`slider-action left ${!showControls ? "none" : ""} flex j-center a-center`}>
-                    <AiOutlineLeft onClick={() => handleDirection("left")} />
+                    <ChevronLeftIcon onClick={() => handleDirection("left")} />
                 </div>
                 <div className='flex slider' ref={listRef}>
                     {
@@ -38,7 +39,7 @@ export default React.memo(function CardSlider({ data, title }) {
                     }
                 </div>
                 <div className={`slider-action right ${!showControls ? "none" : ""} flex j-center a-center`}>
-                    <AiOutlineRight onClick={() => handleDirection("right")} />
+                    <ChevronRightIcon onClick={() => handleDirection("right")} />
                 </div>
             </div>
         </Container>

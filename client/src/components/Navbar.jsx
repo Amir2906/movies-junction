@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaPowerOff, FaSearch } from 'react-icons/fa'
+import SearchIcon from '@mui/icons-material/Search';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { firebaseAuth } from '../utils/firebase-config'
 import logo from '../assets/logo.png'
@@ -46,7 +47,7 @@ export default function Navbar({ isScrolled }) {
                                 if(!inputHover) setShowSearch(false)
                             }}
                         >
-                            <FaSearch />
+                            <SearchIcon fontSize='large' />
                         </button>
                         <input 
                             type="text" 
@@ -62,7 +63,7 @@ export default function Navbar({ isScrolled }) {
                         />
                     </div>
                     <button onClick={() => signOut(firebaseAuth)}>
-                        <FaPowerOff />
+                        <ExitToAppIcon fontSize='large'/>
                     </button>
                 </div>
             </nav>

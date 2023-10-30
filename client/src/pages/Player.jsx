@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BsArrowLeft } from 'react-icons/bs'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import video from '../assets/video.mp4'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,7 +10,7 @@ export default function Player() {
         <Container>
             <div className="player">
                 <div className="back">
-                    <BsArrowLeft onClick={() => navigate(-1)} />
+                    <ArrowBackIcon onClick={() => navigate(-1)} />
                 </div>
                 <video src={video} autoPlay loop controls muted></video>
             </div>
