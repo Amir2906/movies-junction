@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-import { IoPlayCircleSharp } from 'react-icons/io5'
-import { RiThumbUpFill, RiThumbDownFill } from 'react-icons/ri'
-import { BsCheck } from 'react-icons/bs'
-import { AiOutlinePlus } from 'react-icons/ai'
-import { BiChevronDown } from 'react-icons/bi'
+import Tooltip from '@mui/material/Tooltip';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import video from '../assets/video.mp4'
 import { onAuthStateChanged } from 'firebase/auth';
 import { firebaseAuth } from '../utils/firebase-config';
@@ -13,49 +15,49 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { removeFromLikedMovies } from '../store';
 
-export default React.memo(function Card({index, movieData, isLiked = false }) {
+export default React.memo(function Card({ index, movieData, isLiked = false }) {
     const [isHovered, setIsHovered] = useState(false);
     const [email, setEmail] = useState(undefined);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     onAuthStateChanged(firebaseAuth, (currentUser) => {
-        if(currentUser) setEmail(currentUser.email);
+        if (currentUser) setEmail(currentUser.email);
         else navigate('/login');
     });
 
     const addToList = async () => {
         try {
-            await axios.post("http://localhost:5000/api/user/add", {email, data:movieData})
-        } catch(err) {
+            await axios.post("http://localhost:5000/api/user/add", { email, data: movieData })
+        } catch (err) {
             console.log(err);
         }
     }
 
     // console.log(movieData);
     return (
-        <Container 
-            onMouseEnter={() => setIsHovered(true)} 
+        <Container
+            onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            <img 
-                src={`https://image.tmdb.org/t/p/w500${movieData.image}`} 
-                alt="movie" 
+            <img
+                src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
+                alt="movie"
             />
-            
+
             {
                 isHovered && (
                     <div className="hover">
                         <div className="image-video-container">
-                            <img 
-                                src={`https://image.tmdb.org/t/p/w500${movieData.image}`} 
-                                alt="movie" 
+                            <img
+                                src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
+                                alt="movie"
                                 onClick={() => navigate('/player')}
                             />
-                            <video 
-                                src={video} 
-                                autoPlay 
-                                loop 
+                            <video
+                                src={video}
+                                autoPlay
+                                loop
                                 muted
                                 onClick={() => navigate('/player')}
                             />
@@ -66,28 +68,40 @@ export default React.memo(function Card({index, movieData, isLiked = false }) {
                             </h3>
                             <div className="icons flex j-between">
                                 <div className="controls flex">
-                                    <IoPlayCircleSharp 
-                                        title='play'
-                                        onClick={() => navigate('/player')}
-                                    />
-                                    <RiThumbUpFill title='Like' />
-                                    <RiThumbDownFill title='dislike' />
+                                    <Tooltip title='play'>
+                                        <PlayArrowIcon
+                                            onClick={() => navigate('/player')}
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title="Like">
+                                        <ThumbUpIcon />
+                                    </Tooltip>
+                                    <Tooltip title="Dislike">
+                                        <ThumbDownIcon />
+                                    </Tooltip>
                                     {
                                         isLiked ? (
-                                            <BsCheck title='Remove From List' onClick={() => dispatch(removeFromLikedMovies({movieId:movieData.id, email}))} />
+                                            <Tooltip title='Remove From List'>
+                                                <LibraryAddCheckIcon onClick={() => dispatch(removeFromLikedMovies({ movieId: movieData.id, email }))} />
+                                            </Tooltip>
                                         ) : (
-                                            <AiOutlinePlus title='Add to my list' onClick={addToList} />
+                                            <Tooltip title='Add to my list'>
+                                                <LibraryAddIcon onClick={addToList} />
+                                            </Tooltip>
                                         )
                                     }
                                 </div>
                                 <div className="info">
-                                    <BiChevronDown title='More Info' />
+                                    <Tooltip title='More Info'>
+                                        <ArrowDropDownIcon />
+                                    </Tooltip>
+
                                 </div>
                             </div>
                             <div className="genres flex">
                                 <ul className='flex'>
                                     {
-                                        movieData.genres.map((genre) => 
+                                        movieData.genres.map((genre) =>
                                             <li key={genre}>{genre}</li>
                                         )
                                     }
@@ -95,7 +109,7 @@ export default React.memo(function Card({index, movieData, isLiked = false }) {
                             </div>
                         </div>
                     </div>
-                ) 
+                )
             }
         </Container>
     )
